@@ -1,0 +1,97 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form #signUp="ngForm"
+                    (ngSubmit)="onSignUp()"
+                    >
+                        <div class="form-group">
+                            <label for="userName">Username*</label>
+                            <input type="text" 
+                            pattern="[a-zA-Z]+"
+                             required #userName="ngModel"  ngModel class="form-control"
+                              id="username" 
+                              name="username"
+                              minlength="6" maxlength="12">
+                            <span
+                             *ngIf="userName.touched && userName.hasError('required')"
+                            class="text-danger">
+                                Username is required field
+                            </span>
+                            <span 
+                            *ngIf="userName.dirty && userName.hasError('pattern')"
+                            class="text-danger">
+                                Username should not includes numbers and special characters
+                            </span>
+                            <span *ngIf="userName.dirty && userName.hasError('minlength')" class="text-danger">
+                                Minimum length of username should be {{userName.errors?.['minlength'].requiredLength}}
+                                and actual length is {{userName.errors?.['minlength'].actualLength}}
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email*</label>
+                            <input type="text" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" #email="ngModel" required ngModel class="form-control" id="email" name="email">
+                            <span class="text-danger"
+                            *ngIf="email.touched && email.hasError('required')"
+                            >
+                                Email is mandatory
+                            </span>
+                            <span class="text-danger" *ngIf="email.dirty && email.hasError('pattern')"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact">Contact*</label>
+                            <input type="text" #contact="ngModel" ngModel class="form-control" name="contact" id="contact" 
+                            required
+                             pattern="^[0-9]{10}$"
+                             minlength="10"
+                             maxlength="10">
+                             <span
+                             *ngIf="contact.dirty && contact.hasError('pattern')"
+                             class="text-danger">
+                                only numbers are allowed
+                             </span>
+                             <span class="text-danger"
+                             *ngIf="contact.dirty && contact.hasError('minlength')"
+                             >
+                             Minimum length of contact should be {{contact.errors?.['minlength'].requiredLength}}
+                             and actual length is {{contact.errors?.['minlength'].actualLength}}
+                            </span>
+                            <span class="text-danger"
+                            *ngIf="contact.touched && contact.hasError('required')"
+                            >
+                            contact is mandatory
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="secretQuestion">secret Question</label>
+                            <select name="secretQuestion" required id="secretQuestion" class="form-control">
+                                <option value="favouritebook">favouriteBook</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ans">Answer</label>
+                            <input type="text" required name="ans" ngModel class="form-control">
+                        </div>
+
+                       <div class="form-group">
+                        <label for="Subscribed">
+                        <input type="checkbox" ngModel value="subscribed" name="subscribed" id="subcribed">subscribed</label>
+                       </div>
+
+
+                        <div class="form-group" *ngFor="let mode of contactModeArr" >
+                            <label [for]="mode.moc"></label>
+                            <input type="radio" name="modeOfContact" ngModel [value]="mode.moc" [id]="mode.moc">{{mode.moc}}
+                        </div>
+
+                        <button class="btn btn-outline-primary btn-sm btn-block">Sign Up</button>
+                    </form>
+                    <hr>
+                    <button class="btn btn-primary" (click)="onEditUser()">Edit User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
